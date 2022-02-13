@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="store.antawa.backoffice.document_type.domain.DocumentType" table="document_type">
+        <composite-id name="uid" class="store.antawa.backoffice.document_type.domain.DocumentTypeUid" access="field">
+            <key-property column="uid" name="value" length="36" access="field" />
+        </composite-id>
+
+        <component name="name" class="store.antawa.backoffice.document_type.domain.DocumentName" access="field">
+            <property name="value" column="name" type="string" access="field" />
+        </component>
+
+        <component name="codigo" class="store.antawa.backoffice.document_type.domain.DocumentCodigo" access="field">
+            <property name="value" column="codigo" type="string" access="field" />
+        </component>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="store.antawa.backoffice.user.domain.User" table="users">
+        <composite-id name="uid" class="store.antawa.backoffice.user.domain.UserUid" access="field">
+            <key-property column="uid" name="value" length="36" access="field" />
+        </composite-id>
+
+        <component name="names" class="store.antawa.backoffice.user.domain.UserName" access="field">
+            <property name="value" column="names" type="string" access="field" />
+        </component>
+
+        <component name="lastName" class="store.antawa.backoffice.user.domain.UserLastName" access="field">
+            <property name="value" column="last_name" type="string" access="field" />
+        </component>
+        
+        <component name="email" class="store.antawa.backoffice.user.domain.UserEmail" access="field">
+            <property name="value" column="email" type="string" access="field" />
+        </component>
+        
+        <component name="password" class="store.antawa.backoffice.user.domain.UserPassword" access="field">
+            <property name="value" column="password" type="string" access="field" />
+        </component>
+    </class>
+</hibernate-mapping>

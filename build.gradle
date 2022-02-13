@@ -1,0 +1,232 @@
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://repo.spring.io/milestone' }
+    }
+
+    ext {
+        set('springCloudVersion', "Hoxton.M3")
+    }
+
+    ext {
+        set('elasticsearch.version', '6.8.4')
+    }
+    dependencies {
+        // Prod
+        implementation 'org.apache.logging.log4j:log4j-core:2.12.1'
+        implementation 'org.apache.logging.log4j:log4j-api:2.12.1'
+        implementation 'com.vlkan.log4j2:log4j2-logstash-layout:0.21'
+        implementation 'io.github.cdimascio:java-dotenv:5.1.3'
+
+        implementation 'org.hibernate:hibernate-core:5.4.9.Final'
+        implementation 'org.springframework:spring-orm:5.2.2.RELEASE'
+        implementation 'org.apache.tomcat:tomcat-dbcp:9.0.29'
+        implementation 'com.sun.xml.bind:jaxb-impl:2.3.2'
+        implementation 'javax.xml.bind:jaxb-api:2.3.1'
+        implementation 'org.springframework:spring-context-support:5.2.1.RELEASE'
+        implementation 'org.freemarker:freemarker-gae:2.3.29'
+        implementation 'org.reflections:reflections:0.9.11'
+        implementation 'org.springframework.boot:spring-boot-starter-amqp'
+        implementation 'org.elasticsearch.client:elasticsearch-rest-client:6.8.5'
+        implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:6.8.4'
+        //runtime 'mysql:mysql-connector-java:8.0.18'
+        runtime 'org.postgresql:postgresql:42.1.1'
+
+        // Test
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.2'
+        testImplementation 'org.mockito:mockito-core:2.+'
+        testImplementation 'com.github.javafaker:javafaker:1.0.1'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
+        
+        implementation 'com.auth0:java-jwt:3.12.1'
+        implementation 'com.google.auth:google-auth-library-oauth2-http:0.23.0'
+		implementation 'com.google.api-client:google-api-client:1.19.1'
+    	
+    	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    	
+    	//implementation 'commons-fileupload:commons-fileupload:1.3.2'
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+
+    task view_paths {
+        doLast { task ->
+            println "$task.project.name"
+            println "------------------"
+            println "Main: $sourceSets.main.java.srcDirTrees"
+            println "   Resources: $sourceSets.main.resources.srcDirTrees"
+            println "Tests: $sourceSets.test.java.srcDirTrees"
+            println "   Resources: $sourceSets.test.resources.srcDirTrees"
+        }
+    }
+}
+
+// All subprojects (located in src/*)
+subprojects {
+    group = "store.antawa.${rootProject.name}"
+
+    sourceSets {
+        main {
+            java { srcDirs = ['main/code'] }
+            resources { srcDirs = ['main/resources'] }
+        }
+
+        test {
+            java { srcDirs = ['test'] }
+            resources { srcDirs = ['test/resources'] }
+        }
+    }
+	
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web:2.1.8.RELEASE'
+
+        testImplementation rootProject.sourceSets.main.output
+        testImplementation 'org.springframework.boot:spring-boot-starter-test:2.2.1.RELEASE'
+
+        if (project.name != "shared") {
+            implementation project(":shared")
+            testImplementation project(":shared").sourceSets.test.output
+        }
+    }
+
+    bootJar {
+        enabled = false
+    }
+
+    jar {
+        enabled = true
+    }
+
+        
+
+}
+// Main project (located in apps/)
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.2.1.RELEASE')
+    }
+}
+
+sourceSets {
+    main {
+        java { srcDirs = ['apps/main/code'] }
+        resources { srcDirs = ['apps/main/resources'] }
+    }
+
+    test {
+        java { srcDirs = ['apps/test'] }
+        resources { srcDirs = ['apps/test/resources'] }
+    }
+}
+apply plugin: 'application'
+
+
+bootJar {
+    baseName = 'antawa'
+    version = '0.0.1'
+}
+
+mainClassName = 'store.antawa.apps.Starter'
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.1.8.RELEASE'
+
+    implementation project(":shared")
+    implementation project(":trip")
+    implementation project(":customer")
+    implementation project(":driver")
+    implementation project(":backoffice")
+	implementation project(":autorization")
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.1.8.RELEASE'
+//    testImplementation project(":shared").sourceSets.test.output
+
+}
+
+task copyFile1(type: Copy){
+	FileTree tree = fileTree(dir: 'src/autorization/main/code/store/antawa/autorization',include: '**/*.hbm.xml')
+	tree.each {File file ->
+		println "ejecutando copias: " + file.getAbsolutePath()
+		from file
+		into 'src/autorization/main/resources/hbm_tmp/autorization'
+	}
+
+}
+task copyFile2(type: Copy){
+	FileTree tree2 = fileTree(dir: 'src/backoffice/main/code/store/antawa/backoffice',include: '**/*.hbm.xml')
+	tree2.each {File file ->
+		println "ejecutando copias: " + file.getAbsolutePath()
+		from file
+		into 'src/backoffice/main/resources/hbm_tmp/backoffice'
+	}
+}
+task copyFile3(type: Copy){
+	FileTree tree2 = fileTree(dir: 'src/customer/main/code/store/antawa/customer',include: '**/*.hbm.xml')
+	tree2.each {File file ->
+		println "ejecutando copias: " + file.getAbsolutePath()
+		from file
+		into 'src/customer/main/resources/hbm_tmp/customer'
+	}
+}
+task copyFile4(type: Copy){
+	FileTree tree2 = fileTree(dir: 'src/driver/main/code/store/antawa/driver',include: '**/*.hbm.xml')
+	tree2.each {File file ->
+		println "ejecutando copias: " + file.getAbsolutePath()
+		from file
+		into 'src/driver/main/resources/hbm_tmp/driver'
+	}
+}
+task copyFile5(type: Copy){
+	FileTree tree2 = fileTree(dir: 'src/trip/main/code/store/antawa/trip',include: '**/*.hbm.xml')
+	tree2.each {File file ->
+		println "ejecutando copias: " + file.getAbsolutePath()
+		from file
+		into 'src/trip/main/resources/hbm_tmp/trip'
+	}
+}
+task deleteHbmXml(type: Delete) {
+        delete fileTree('src/autorization/main/resources/hbm_tmp/autorization') {
+            include '*.hbm.xml'
+        }
+        delete fileTree('src/backoffice/main/resources/hbm_tmp/backoffice') {
+            include '*.hbm.xml'
+        }
+        delete fileTree('src/customer/main/resources/hbm_tmp/customer') {
+            include '*.hbm.xml'
+        }
+        delete fileTree('src/driver/main/resources/hbm_tmp/driver') {
+            include '*.hbm.xml'
+        }
+        delete fileTree('src/trip/main/resources/hbm_tmp/trip') {
+            include '*.hbm.xml'
+        }
+}
+
+//task makePretty(type: Delete) {
+//  delete 'src/administration/main/resources/hbm_tmp/*.xml'
+//  followSymlinks = true
+//}
+//jar.dependsOn(copyFile)

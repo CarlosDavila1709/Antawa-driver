@@ -1,0 +1,20 @@
+rootProject.name = 'antawa'
+
+include ':shared'
+project(':shared').projectDir = new File('src/shared')
+
+include ':trip'
+project(':trip').projectDir = new File('src/trip')
+
+include ':customer'
+project(':customer').projectDir = new File('src/customer')
+
+include ':driver'
+project(':driver').projectDir = new File('src/driver')
+
+include ':backoffice'
+project(':backoffice').projectDir = new File('src/backoffice')
+
+include ':autorization'
+project(':autorization').projectDir = new File('src/autorization')
+

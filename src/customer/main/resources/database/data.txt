@@ -1,0 +1,8 @@
+insert into personal_document(uid, name) values 
+('d94f8f7e-e4c4-11eb-ba80-0242ac130004', 'Dni'),
+('d94f903c-e4c4-11eb-ba80-0242ac130004', 'Pasaporte'),
+('d94f90f0-e4c4-11eb-ba80-0242ac130004', 'Tarjeta de extranjeria');
+
+insert into personal_dni(uid) 			values ('d94f8f7e-e4c4-11eb-ba80-0242ac130004');
+insert into personal_passport(uid) 		values ('d94f903c-e4c4-11eb-ba80-0242ac130004');
+insert into personal_extranjeria(uid) 	values ('d94f90f0-e4c4-11eb-ba80-0242ac130004');

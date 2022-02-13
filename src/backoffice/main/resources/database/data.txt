@@ -1,0 +1,7 @@
+insert into document_type(uid, name, codigo) values 
+('11b2e86f-7cc5-4b93-9fdb-6c4bea83d0c3', 'Constancia de Actecedentes Penales (original no copia)', 'solicitud-criminal'),
+('12b2e86f-7cc5-4b93-9fdb-6c4bea83d0c3', 'Identificación Personal (DNI, PASAPORTE, CARNET EXTRANJERIA)', 'solicitud-identidad'),
+('13b2e86f-7cc5-4b93-9fdb-6c4bea83d0c3', 'SOA Venhicular vigente', 'solicitud-soa'),
+('8d1ce420-db6f-11eb-8d19-0242ac130003', 'Foto Vehiculo', 'solicitud-vehiculo'),
+('8d1ce4d4-db6f-11eb-8d19-0242ac130003', 'Foto rostro conductor', 'solicitud-face');
+

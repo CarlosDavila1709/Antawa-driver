@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="store.antawa.customer.personal_document.domain.PersonalDocument" table="personal_document">
+        
+        <composite-id name="uid" class="store.antawa.customer.personal_document.domain.PersonalDocumentUid" access="field">
+            <key-property column="uid" name="value" length="36" access="field" />
+        </composite-id>
+
+        <component name="name" class="store.antawa.customer.personal_document.domain.PersonalDocumentName" access="field">
+            <property name="value" column="name" type="string" access="field" />
+        </component>
+        
+        <joined-subclass name="store.antawa.customer.personal_document.domain.dni.Dni" table="personal_dni">
+            <key column="uid" />
+        
+        </joined-subclass>
+        
+        <joined-subclass name="store.antawa.customer.personal_document.domain.passport.Passport" table="personal_passport">
+            <key column="uid" />
+
+        </joined-subclass>
+                <joined-subclass name="store.antawa.customer.personal_document.domain.carnet_extranjeria.CarnetExtranjeria" table="personal_extranjeria">
+            <key column="uid" />
+
+        </joined-subclass>
+    </class>
+</hibernate-mapping>

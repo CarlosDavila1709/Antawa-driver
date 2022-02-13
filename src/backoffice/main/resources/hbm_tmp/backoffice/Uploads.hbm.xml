@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="store.antawa.backoffice.uploads.domain.Uploads" table="uploads">
+        <composite-id name="uid" class="store.antawa.backoffice.uploads.domain.UploadsUid" access="field">
+            <key-property column="uid" name="value" length="36" access="field" />
+        </composite-id>
+        <component name="name" class="store.antawa.backoffice.uploads.domain.UploadsName" access="field">
+            <property name="value" column="name" type="string" access="field" />
+        </component>
+        <component name="path" class="store.antawa.backoffice.uploads.domain.UploadsPath" access="field">
+            <property name="value" column="path" type="string" access="field" />
+        </component>
+        <component name="ownerUid" class="store.antawa.backoffice.uploads.domain.OwnerUid" access="field">
+            <property name="value" column="owner_uid" type="string" access="field" />
+        </component>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="store.antawa.driver.driver.domain.Driver" table="drivers">
+        <composite-id name="uid" class="store.antawa.driver.driver.domain.DriverUid" access="field">
+            <key-property column="uid" name="value" length="36" access="field" />
+        </composite-id>
+
+        <component name="names" class="store.antawa.driver.driver.domain.DriverNames" access="field">
+            <property name="value" column="names" type="string" access="field" />
+        </component>
+
+        <component name="lastName" class="store.antawa.driver.driver.domain.DriverLastName" access="field">
+            <property name="value" column="lastname" type="string" access="field" />
+        </component>
+        
+        <component name="email" class="store.antawa.driver.driver.domain.DriverEmail" access="field">
+            <property name="value" column="email" type="string" access="field" />
+        </component>
+        
+        <component name="phoneMobile" class="store.antawa.driver.driver.domain.DriverPhoneMobile" access="field">
+            <property name="value" column="phone_mobile" type="string" access="field" />
+        </component>
+        
+        <component name="password" class="store.antawa.driver.driver.domain.DriverPassword" access="field">
+            <property name="value" column="password" type="string" access="field" />
+        </component>
+        
+        <component name="imgAvatar" class="store.antawa.driver.driver.domain.DriverImgAvatar" access="field">
+            <property name="value" column="img_avatar" type="string" access="field" />
+        </component>
+        
+        <property name="personalDocumentUid" column="personal_document_uid" type="string" access="field" />
+        <property name="numberDocument" column="number_document" type="string" access="field" />
+        <property name="descriptionDocument" column="description_document" type="string" access="field" />
+    </class>
+</hibernate-mapping>

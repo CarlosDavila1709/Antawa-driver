@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="store.antawa.customer.user.domain.User" table="users">
+        <composite-id name="uid" class="store.antawa.customer.user.domain.UserUid" access="field">
+            <key-property column="uid" name="value" length="36" access="field" />
+        </composite-id>
+
+        <component name="names" class="store.antawa.customer.user.domain.UserName" access="field">
+            <property name="value" column="names" type="string" access="field" />
+        </component>
+
+        <component name="lastName" class="store.antawa.customer.user.domain.UserLastName" access="field">
+            <property name="value" column="last_name" type="string" access="field" />
+        </component>
+        
+        <component name="email" class="store.antawa.customer.user.domain.UserEmail" access="field">
+            <property name="value" column="email" type="string" access="field" />
+        </component>
+        
+        <component name="phoneMobile" class="store.antawa.customer.user.domain.UserPhoneMobile" access="field">
+            <property name="value" column="phone_mobile" type="string" access="field" />
+        </component>
+        
+        <component name="password" class="store.antawa.customer.user.domain.UserPassword" access="field">
+            <property name="value" column="password" type="string" access="field" />
+        </component>
+        
+        <property name="personalDocumentUid" column="personal_document_uid" type="string" access="field" />
+        <property name="numberDocument" column="number_document" type="string" access="field" />
+    </class>
+</hibernate-mapping>

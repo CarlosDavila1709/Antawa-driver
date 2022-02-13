@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="store.antawa.backoffice.solicitud.domain.Solicitud" table="solicitudes">
+        <composite-id name="uid" class="store.antawa.backoffice.solicitud.domain.SolicitudUid" access="field">
+            <key-property column="uid" name="value" length="36" access="field" />
+        </composite-id>
+        <property name="driverUid" column="driver_uid" type="string" access="field" />
+		<property name="namesDriver" column="names_driver" type="string" access="field" />
+		<property name="lastNameDriver" column="last_name_driver" type="string" access="field" />
+		<property name="document" column="document" type="string" access="field" />
+		<property name="numberDocument" column="number_document" type="string" access="field" />
+		
+		<property name="imageSoa" column="image_soa" type="string" access="field" />
+		<property name="imageCriminalRecord" column="image_criminal_record" type="string" access="field" />
+		<property name="imageVehiculo" column="image_vehiculo" type="string" access="field" />
+		<property name="imageFaceDriver" column="image_face_driver" type="string" access="field" /> 
+		<property name="imageIdentidad" column="image_identidad" type="string" access="field" /> 
+		<property name="observation" column="observation" type="string" access="field" /> 
+        <component name="status" class="store.antawa.backoffice.solicitud.domain.SolicitudStatus" access="field">
+            <property name="value" column="status" type="string" access="field" />
+        </component>
+        <component name="dateCreation" class="store.antawa.backoffice.solicitud.domain.SolicitudDateCreation" access="field">
+            <property name="value" column="date_creation" type="string" access="field" />
+        </component>
+        
+    </class>
+</hibernate-mapping>
